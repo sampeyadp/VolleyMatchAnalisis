@@ -1,0 +1,49 @@
+@page
+@model VolleyMatchAnalisis.Pages.Squadre.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+<h2>Squadre per Affiliazione</h2>
+
+<table id="squadreTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Affiliazione</th>
+            <th>Squadre</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var gruppo in Model.SquadreRaggruppate)
+        {
+            <tr>
+                <td>@gruppo.Key</td>
+                <td>
+                    <ul>
+                        @foreach (var squadra in gruppo.Value ?? new List<string>())
+                        {
+                            <li>@squadra</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#squadreTable').DataTable({
+                "paging": true,
+                "pageLength": 25,
+                "searching": true,
+                "ordering": true,
+                "order": [], // nessun ordinamento iniziale
+                "columnDefs": [
+                    { "orderable": false, "targets": 1 } // disabilita ordinamento sulla colonna "Squadre"
+                ]
+            });
+        });
+    </script>
+}

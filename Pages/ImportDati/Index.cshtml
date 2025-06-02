@@ -1,0 +1,46 @@
+@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model VolleyMatchAnalisis.Pages.ImportDati.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+<h2>Importa Dati da Excel</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <input type="file" asp-for="ExcelFile" class="form-control" required />
+    <button type="submit" class="import-btn">Importa</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div style="color:red;">@Model.ErrorMessage</div>
+}
+
+@if (Model.ImportResult != null)
+{
+    <h3>Importazione completata!</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Cod</th>
+                <th>SquadraA</th>
+                <th>SquadraB</th>
+                <th>Ris</th>
+                <th>Parziali</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var gara in Model.ImportResult)
+            {
+                <tr>
+                    <td>@gara.Cod</td>
+                    <td>@gara.SquadraA</td>
+                    <td>@gara.SquadraB</td>
+                    <td>@gara.Ris</td>
+                    <td>@gara.Parziali</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

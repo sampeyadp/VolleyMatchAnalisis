@@ -1,0 +1,228 @@
+{
+  "Version": 1,
+  "Hash": "YL6zslFFsVvdCEdbA04iSk4UVYuQIW5wvUW/U83cofw=",
+  "Source": "VolleyMatchAnalisis",
+  "BasePath": "_content/VolleyMatchAnalisis",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "VolleyMatchAnalisis\\wwwroot",
+      "Source": "VolleyMatchAnalisis",
+      "ContentRoot": "D:\\VolleyMatchAnalisis2.0\\wwwroot\\",
+      "BasePath": "_content/VolleyMatchAnalisis",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\VolleyMatchAnalisis2.0\\wwwroot\\css\\site.css",
+      "SourceId": "VolleyMatchAnalisis",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\VolleyMatchAnalisis2.0\\wwwroot\\",
+      "BasePath": "_content/VolleyMatchAnalisis",
+      "RelativePath": "css/site#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "26x12hi2kk",
+      "Integrity": "1tvm209u1yi8DqoS2D/gayr0XfKMg5UqfA4TA8XTiZ0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "D:\\VolleyMatchAnalisis2.0\\wwwroot\\images\\Logo.png",
+      "SourceId": "VolleyMatchAnalisis",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\VolleyMatchAnalisis2.0\\wwwroot\\",
+      "BasePath": "_content/VolleyMatchAnalisis",
+      "RelativePath": "images/Logo#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "s8zzalojae",
+      "Integrity": "1GQsFtNdn2TlApHPaFvBIG+T0IQWly0utdJMMQbwhVA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Logo.png"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "css/site.26x12hi2kk.css",
+      "AssetFile": "D:\\VolleyMatchAnalisis2.0\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4629"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1tvm209u1yi8DqoS2D/gayr0XfKMg5UqfA4TA8XTiZ0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 15:16:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "26x12hi2kk"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-1tvm209u1yi8DqoS2D/gayr0XfKMg5UqfA4TA8XTiZ0="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "D:\\VolleyMatchAnalisis2.0\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4629"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1tvm209u1yi8DqoS2D/gayr0XfKMg5UqfA4TA8XTiZ0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 30 May 2025 15:16:58 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1tvm209u1yi8DqoS2D/gayr0XfKMg5UqfA4TA8XTiZ0="
+        }
+      ]
+    },
+    {
+      "Route": "images/Logo.png",
+      "AssetFile": "D:\\VolleyMatchAnalisis2.0\\wwwroot\\images\\Logo.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "160816"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1GQsFtNdn2TlApHPaFvBIG+T0IQWly0utdJMMQbwhVA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 29 May 2025 13:46:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1GQsFtNdn2TlApHPaFvBIG+T0IQWly0utdJMMQbwhVA="
+        }
+      ]
+    },
+    {
+      "Route": "images/Logo.s8zzalojae.png",
+      "AssetFile": "D:\\VolleyMatchAnalisis2.0\\wwwroot\\images\\Logo.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "160816"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1GQsFtNdn2TlApHPaFvBIG+T0IQWly0utdJMMQbwhVA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 29 May 2025 13:46:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "s8zzalojae"
+        },
+        {
+          "Name": "label",
+          "Value": "images/Logo.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-1GQsFtNdn2TlApHPaFvBIG+T0IQWly0utdJMMQbwhVA="
+        }
+      ]
+    }
+  ]
+}

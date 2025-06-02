@@ -1,0 +1,161 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model VolleyMatchAnalisis.Pages.Atleti.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @Model.SuccessMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @Model.ErrorMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<h2>Elenco Atleti</h2>
+
+<form method="get" style="margin-bottom:20px;">
+    <label>Filtra per stagione:</label>
+    <select name="FiltroStagione" class="form-select" onchange="this.form.submit()">
+        <option value="">-- Tutte --</option>
+        @foreach (var stagione in Model.Stagioni)
+        {
+            <option value="@stagione" selected="@(stagione == Model.FiltroStagione ? "selected" : null)">@stagione</option>
+        }
+    </select>
+    <noscript><button type="submit" class="btn btn-primary btn-sm">Filtra</button></noscript>
+</form>
+
+<table id="atletiTable" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Stagione</th>
+            <th>Matricola</th>
+            <th>CognomeNome</th>
+            <th>Sesso</th>
+            <th>Codice Fiscale</th>
+            <th>Data Nascita</th>
+            <th>Data Tesseramento</th>
+            <th>Iscrizione</th>
+            <th>Gennaio</th>
+            <th>Febbraio</th>
+            <th>Marzo</th>
+            <th>Aprile</th>
+            <th>Maggio</th>
+            <th>Giugno</th>
+            <th>Luglio</th>
+            <th>Agosto</th>
+            <th>Settembre</th>
+            <th>Ottobre</th>
+            <th>Novembre</th>
+            <th>Dicembre</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var atleta in Model.Atleti)
+        {
+            if (Model.AtletaEdit != null && Model.AtletaEdit.Id == atleta.Id)
+            {
+                <!-- RIGA IN MODALITÀ EDIT -->
+                <tr>
+                    <form method="post" asp-page-handler="Edit">
+                    <td>@atleta.Stagione<input type="hidden" asp-for="AtletaEdit.Id" value="@atleta.Id" /></td>
+                    <td>@atleta.Matricola</td>
+                    <td>@atleta.CognomeNome</td>
+                    <td>@atleta.Sesso</td>
+                    <td>@atleta.CodiceFiscale</td>
+                    <td>@(atleta.DataNascita?.ToShortDateString())</td>
+                    <td>@(atleta.DataTesseramento?.ToShortDateString())</td>
+                    <td><input asp-for="AtletaEdit.Iscrizione" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Gennaio" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Febbraio" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Marzo" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Aprile" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Maggio" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Giugno" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Luglio" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Agosto" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Settembre" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Ottobre" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Novembre" class="form-control form-control-sm" /></td>
+                    <td><input asp-for="AtletaEdit.Dicembre" class="form-control form-control-sm" /></td>
+                    <td>
+                        <button type="submit" class="btn btn-success btn-sm">Salva</button>
+                        <a href="@Url.Page("Index", new { FiltroStagione = Model.FiltroStagione })" class="btn btn-secondary btn-sm">Annulla</a>
+                    </td>
+                    </form>
+                </tr>
+            }
+            else
+            {
+                <!-- RIGA IN VISUALIZZAZIONE -->
+                <tr>
+                    <td>@atleta.Stagione</td>
+                    <td>@atleta.Matricola</td>
+                    <td>@atleta.CognomeNome</td>
+                    <td>@atleta.Sesso</td>
+                    <td>@atleta.CodiceFiscale</td>
+                    <td>@(atleta.DataNascita?.ToShortDateString())</td>
+                    <td>@(atleta.DataTesseramento?.ToShortDateString())</td>
+                    <td>@atleta.Iscrizione</td>
+                    <td>@atleta.Gennaio</td>
+                    <td>@atleta.Febbraio</td>
+                    <td>@atleta.Marzo</td>
+                    <td>@atleta.Aprile</td>
+                    <td>@atleta.Maggio</td>
+                    <td>@atleta.Giugno</td>
+                    <td>@atleta.Luglio</td>
+                    <td>@atleta.Agosto</td>
+                    <td>@atleta.Settembre</td>
+                    <td>@atleta.Ottobre</td>
+                    <td>@atleta.Novembre</td>
+                    <td>@atleta.Dicembre</td>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" style="display:inline;">
+                            <input type="hidden" name="id" value="@atleta.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Sicuro di voler eliminare questo atleta?');">Elimina</button>
+                        </form>
+                        <form method="get" style="display:inline;">
+                            <input type="hidden" name="FiltroStagione" value="@Model.FiltroStagione" />
+                            <input type="hidden" name="AtletaEditId" value="@atleta.Id" />
+                            <button type="submit" class="btn btn-primary btn-sm">Modifica</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#atletiTable').DataTable({
+                "pageLength": 25,
+                "language": {
+                    "search": "Cerca:",
+                    "lengthMenu": "Mostra _MENU_ righe",
+                    "info": "Pagina _PAGE_ di _PAGES_",
+                    "paginate": {
+                        "first": "Prima",
+                        "last": "Ultima",
+                        "next": "Successiva",
+                        "previous": "Precedente"
+                    },
+                    "zeroRecords": "Nessun record trovato",
+                    "infoEmpty": "Nessun dato disponibile",
+                    "infoFiltered": "(filtrato da _MAX_ righe totali)"
+                }
+            });
+        });
+    </script>
+}

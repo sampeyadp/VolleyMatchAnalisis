@@ -1,0 +1,130 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model VolleyMatchAnalisis.Pages.ImportAtleti.IndexModel
+@{
+    Layout = "_Layout";
+}
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @Model.SuccessMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @Model.ErrorMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<h2>Importa Atleti da Excel</h2>
+
+<div class="input-row">
+    <form method="post" enctype="multipart/form-data" style="display: flex; align-items: center;" id="importForm">
+        <label for="stagione">Stagione:</label>
+        <select asp-for="SelectedStagione" asp-items="@(new SelectList(Model.Stagioni))" id="stagione" required onchange="updateStagioneHidden()"></select>
+        <label for="ExcelFile" style="margin-left: 24px;">File:</label>
+        <input type="file" asp-for="ExcelFile" id="ExcelFile" required style="margin-right: 18px;" />
+        <button type="submit" class="import-btn">Importa</button>
+    </form>
+
+    <form method="post" asp-page-handler="Elimina" id="eliminaForm">
+        <input type="hidden" id="stagione-hidden" name="SelectedStagione" value="@Model.SelectedStagione" />
+        <button type="submit" class="elimina-btn">Elimina Dati Anno Selezionato</button>
+    </form>
+</div>
+
+
+
+
+@if (Model.ImportResult != null && Model.ImportResult.Count > 0)
+{
+    <h3>Importazione completata!</h3>
+    <table id="atletiTable" class="display">
+        <thead>
+            <tr>
+                <th>Stagione</th>
+                <th>Matricola</th>
+                <th>CognomeNome</th>
+                <th>Sesso</th>
+                <th>Codice Fiscale</th>
+                <th>Data Nascita</th>
+                <th>Data Tesseramento</th>
+                <th>Iscrizione</th>
+                <th>Gennaio</th>
+                <th>Febbraio</th>
+                <th>Marzo</th>
+                <th>Aprile</th>
+                <th>Maggio</th>
+                <th>Giugno</th>
+                <th>Luglio</th>
+                <th>Agosto</th>
+                <th>Settembre</th>
+                <th>Ottobre</th>
+                <th>Novembre</th>
+                <th>Dicembre</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var atleta in Model.ImportResult)
+            {
+                <tr>
+                    <td>@atleta.Stagione</td>
+                    <td>@atleta.Matricola</td>
+                    <td>@atleta.CognomeNome</td>
+                    <td>@atleta.Sesso</td>
+                    <td>@atleta.CodiceFiscale</td>
+                    <td>@(atleta.DataNascita?.ToShortDateString())</td>
+                    <td>@(atleta.DataTesseramento?.ToShortDateString())</td>
+                    <td>@atleta.Iscrizione</td>
+                    <td>@atleta.Gennaio</td>
+                    <td>@atleta.Febbraio</td>
+                    <td>@atleta.Marzo</td>
+                    <td>@atleta.Aprile</td>
+                    <td>@atleta.Maggio</td>
+                    <td>@atleta.Giugno</td>
+                    <td>@atleta.Luglio</td>
+                    <td>@atleta.Agosto</td>
+                    <td>@atleta.Settembre</td>
+                    <td>@atleta.Ottobre</td>
+                    <td>@atleta.Novembre</td>
+                    <td>@atleta.Dicembre</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function () {
+            $('#atletiTable').DataTable({
+                paging: true,
+                pageLength: 25,
+                searching: true,
+                ordering: true,
+                order: [[0, "asc"]],
+                info: true,
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/it-IT.json"
+                }
+            });
+        });
+
+        function updateStagioneHidden() {
+            var selected = document.getElementById('stagione').value;
+            document.getElementById('stagione-hidden').value = selected;
+        }
+        // Per sicurezza, aggiorniamo subito il valore hidden anche al caricamento iniziale
+        document.addEventListener("DOMContentLoaded", function() {
+            updateStagioneHidden();
+        });
+
+    </script>
+
+}
+
