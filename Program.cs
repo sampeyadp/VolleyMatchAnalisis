@@ -12,6 +12,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<ExcelImportService>();
 builder.Services.AddScoped<GaraAnalysisService>();
 builder.Services.AddScoped<ExcelImportAtletiService>();
+builder.Services.AddScoped<CsvImportPagamentiService>();
 
 var app = builder.Build();
 

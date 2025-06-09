@@ -3,6 +3,8 @@
 @model VolleyMatchAnalisis.Pages.Atleti.IndexModel
 @{
     Layout = "_Layout";
+    var pagamentiNonAssociati = ViewData["PagamentiNonAssociatiLog"] as List<string> ?? new List<string>();
+    var pagamentiAmbigui = ViewData["PagamentiAmbiguiLog"] as List<string> ?? new List<string>();
 }
 
 @if (!string.IsNullOrEmpty(Model.SuccessMessage))
@@ -20,142 +22,294 @@
     </div>
 }
 
-<h2>Elenco Atleti</h2>
-
-<form method="get" style="margin-bottom:20px;">
-    <label>Filtra per stagione:</label>
-    <select name="FiltroStagione" class="form-select" onchange="this.form.submit()">
-        <option value="">-- Tutte --</option>
-        @foreach (var stagione in Model.Stagioni)
-        {
-            <option value="@stagione" selected="@(stagione == Model.FiltroStagione ? "selected" : null)">@stagione</option>
-        }
-    </select>
-    <noscript><button type="submit" class="btn btn-primary btn-sm">Filtra</button></noscript>
-</form>
-
-<table id="atletiTable" class="display" style="width:100%">
-    <thead>
-        <tr>
-            <th>Stagione</th>
-            <th>Matricola</th>
-            <th>CognomeNome</th>
-            <th>Sesso</th>
-            <th>Codice Fiscale</th>
-            <th>Data Nascita</th>
-            <th>Data Tesseramento</th>
-            <th>Iscrizione</th>
-            <th>Gennaio</th>
-            <th>Febbraio</th>
-            <th>Marzo</th>
-            <th>Aprile</th>
-            <th>Maggio</th>
-            <th>Giugno</th>
-            <th>Luglio</th>
-            <th>Agosto</th>
-            <th>Settembre</th>
-            <th>Ottobre</th>
-            <th>Novembre</th>
-            <th>Dicembre</th>
-            <th>Azioni</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var atleta in Model.Atleti)
-        {
-            if (Model.AtletaEdit != null && Model.AtletaEdit.Id == atleta.Id)
+<ul class="nav nav-tabs mb-3" id="atletiTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="elenco-tab" data-bs-toggle="tab" data-bs-target="#elenco" type="button" role="tab" aria-controls="elenco" aria-selected="true">
+            Elenco Atleti
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="import-tab" data-bs-toggle="tab" data-bs-target="#import" type="button" role="tab" aria-controls="import" aria-selected="false">
+            Segnalazioni Import
+            @if (pagamentiNonAssociati.Any() || pagamentiAmbigui.Any())
             {
-                <!-- RIGA IN MODALITÀ EDIT -->
-                <tr>
-                    <form method="post" asp-page-handler="Edit">
-                    <td>@atleta.Stagione<input type="hidden" asp-for="AtletaEdit.Id" value="@atleta.Id" /></td>
-                    <td>@atleta.Matricola</td>
-                    <td>@atleta.CognomeNome</td>
-                    <td>@atleta.Sesso</td>
-                    <td>@atleta.CodiceFiscale</td>
-                    <td>@(atleta.DataNascita?.ToShortDateString())</td>
-                    <td>@(atleta.DataTesseramento?.ToShortDateString())</td>
-                    <td><input asp-for="AtletaEdit.Iscrizione" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Gennaio" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Febbraio" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Marzo" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Aprile" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Maggio" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Giugno" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Luglio" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Agosto" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Settembre" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Ottobre" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Novembre" class="form-control form-control-sm" /></td>
-                    <td><input asp-for="AtletaEdit.Dicembre" class="form-control form-control-sm" /></td>
-                    <td>
-                        <button type="submit" class="btn btn-success btn-sm">Salva</button>
-                        <a href="@Url.Page("Index", new { FiltroStagione = Model.FiltroStagione })" class="btn btn-secondary btn-sm">Annulla</a>
-                    </td>
-                    </form>
-                </tr>
+                <span class="badge bg-warning text-dark ms-1">@(@pagamentiNonAssociati.Count + @pagamentiAmbigui.Count)</span>
             }
-            else
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content" id="atletiTabsContent">
+    <div class="tab-pane fade show active" id="elenco" role="tabpanel" aria-labelledby="elenco-tab">
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-2 flex-wrap gap-2">
+            <h2 class="mb-0">Elenco Atleti</h2>
+            <form method="post" asp-page-handler="ImportaPagamenti" class="mb-0">
+                <button type="submit" class="btn btn-warning">
+                    Importa Pagamenti e Aggiorna Quote Atleti
+                </button>
+            </form>
+        </div>
+
+        <form method="get" class="row g-3 align-items-center mb-3">
+            <div class="col-auto">
+                <label for="FiltroStagione" class="col-form-label">Filtra per stagione:</label>
+            </div>
+            <div class="col-auto">
+                <select name="FiltroStagione" id="FiltroStagione" class="form-select" onchange="this.form.submit()">
+                    <option value="">-- Tutte --</option>
+                    @foreach (var stagione in Model.Stagioni)
+                    {
+                        <option value="@stagione" selected="@(stagione == Model.FiltroStagione ? "selected" : null)">@stagione</option>
+                    }
+                </select>
+            </div>
+            <div class="col-auto">
+                <div class="form-check">
+                    <input type="checkbox" name="SoloUnder16" value="true" class="form-check-input" id="SoloUnder16" @(Model.SoloUnder16 ? "checked" : "") onchange="this.form.submit()" />
+                    <label class="form-check-label" for="SoloUnder16">Solo atleti con età &lt; 16 anni</label>
+                </div>
+            </div>
+            <noscript><button type="submit" class="btn btn-primary btn-sm">Filtra</button></noscript>
+        </form>
+
+        <style>
+            /* Per la modalità edit: colorazione input */
+            .input-success {
+                background-color: #d1e7dd !important;
+                color: #0f5132 !important;
+            }
+
+            .input-danger {
+                background-color: #f8d7da !important;
+                color: #842029 !important;
+            }
+        </style>
+
+        <div class="table-responsive">
+            <table id="atletiTable" class="table table-bordered table-striped align-middle w-100">
+                <thead>
+                    <tr>
+                        <th>Anno</th>
+                        <th>Cognome Nome</th>
+                        <th>Sesso</th>
+                        <th>Data Nasc.</th>
+                        <th>Data Tess.</th>
+                        <th>Iscr.</th>
+                        <th>Set</th>
+                        <th>Ott</th>
+                        <th>Nov</th>
+                        <th>Dic</th>
+                        <th>Gen</th>
+                        <th>Feb</th>
+                        <th>Mar</th>
+                        <th>Apr</th>
+                        <th>Mag</th>
+                        <th>Giu</th>
+                        <th>Lug</th>
+                        <th>Ago</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var atleta in Model.Atleti)
+                    {
+                        if (Model.AtletaEdit != null && Model.AtletaEdit.Id == atleta.Id)
+                        {
+                            // Modalità EDIT
+                            <tr>
+                                <form method="post" asp-page-handler="Edit">
+                                <td>@atleta.Stagione<input type="hidden" asp-for="AtletaEdit.Id" value="@atleta.Id" /></td>
+                                <td>@atleta.CognomeNome</td>
+                                <td>@atleta.Sesso</td>
+                                <td>@(atleta.DataNascita?.ToShortDateString())</td>
+                                <td>@(atleta.DataTesseramento?.ToShortDateString())</td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Iscrizione"
+                                           class="form-control form-control-sm @(atleta.Iscrizione > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Settembre"
+                                           class="form-control form-control-sm @(atleta.Settembre > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Ottobre"
+                                           class="form-control form-control-sm @(atleta.Ottobre > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Novembre"
+                                           class="form-control form-control-sm @(atleta.Novembre > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Dicembre"
+                                           class="form-control form-control-sm @(atleta.Dicembre > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Gennaio"
+                                           class="form-control form-control-sm @(atleta.Gennaio > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Febbraio"
+                                           class="form-control form-control-sm @(atleta.Febbraio > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Marzo"
+                                           class="form-control form-control-sm @(atleta.Marzo > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Aprile"
+                                           class="form-control form-control-sm @(atleta.Aprile > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Maggio"
+                                           class="form-control form-control-sm @(atleta.Maggio > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Giugno"
+                                           class="form-control form-control-sm @(atleta.Giugno > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Luglio"
+                                           class="form-control form-control-sm @(atleta.Luglio > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <input asp-for="AtletaEdit.Agosto"
+                                           class="form-control form-control-sm @(atleta.Agosto > 0 ? "input-success" : "input-danger")"
+                                           type="number" step="0.01" />
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-success btn-sm">Salva</button>
+                                    <a href="@Url.Page("Index", new { FiltroStagione = Model.FiltroStagione })" class="btn btn-secondary btn-sm">Annulla</a>
+                                </td>
+                                </form>
+                            </tr>
+                        }
+                        else
+                        {
+                            // Modalità VISUALIZZAZIONE
+                            <tr>
+                                <td>@atleta.Stagione</td>
+                                <td>@atleta.CognomeNome</td>
+                                <td>@atleta.Sesso</td>
+                                <td>@(atleta.DataNascita?.ToShortDateString())</td>
+                                <td>@(atleta.DataTesseramento?.ToShortDateString())</td>
+                                @* Celle colorate in stile vittoria/sconfitta *@
+                                <td class="@(atleta.Iscrizione > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Iscrizione:0.00}")</td>
+                                <td class="@(atleta.Settembre > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Settembre:0.00}")</td>
+                                <td class="@(atleta.Ottobre > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Ottobre:0.00}")</td>
+                                <td class="@(atleta.Novembre > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Novembre:0.00}")</td>
+                                <td class="@(atleta.Dicembre > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Dicembre:0.00}")</td>
+                                <td class="@(atleta.Gennaio > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Gennaio:0.00}")</td>
+                                <td class="@(atleta.Febbraio > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Febbraio:0.00}")</td>
+                                <td class="@(atleta.Marzo > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Marzo:0.00}")</td>
+                                <td class="@(atleta.Aprile > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Aprile:0.00}")</td>
+                                <td class="@(atleta.Maggio > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Maggio:0.00}")</td>
+                                <td class="@(atleta.Giugno > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Giugno:0.00}")</td>
+                                <td class="@(atleta.Luglio > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Luglio:0.00}")</td>
+                                <td class="@(atleta.Agosto > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Agosto:0.00}")</td>
+                                <td>
+                                    <form method="post" asp-page-handler="Delete" class="d-inline">
+                                        <input type="hidden" name="id" value="@atleta.Id" />
+                                        <button type="submit" class="btn btn-danger btn-sm" title="Elimina" onclick="return confirm('Sicuro di voler eliminare questo atleta?');">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                    <form method="get" class="d-inline">
+                                        <input type="hidden" name="FiltroStagione" value="@Model.FiltroStagione" />
+                                        <input type="hidden" name="AtletaEditId" value="@atleta.Id" />
+                                        <button type="submit" class="btn btn-primary btn-sm" title="Modifica">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="import" role="tabpanel" aria-labelledby="import-tab">
+        <div class="mt-4">
+            <h4>Segnalazioni Import Pagamenti</h4>
+            @if (pagamentiNonAssociati.Any())
             {
-                <!-- RIGA IN VISUALIZZAZIONE -->
-                <tr>
-                    <td>@atleta.Stagione</td>
-                    <td>@atleta.Matricola</td>
-                    <td>@atleta.CognomeNome</td>
-                    <td>@atleta.Sesso</td>
-                    <td>@atleta.CodiceFiscale</td>
-                    <td>@(atleta.DataNascita?.ToShortDateString())</td>
-                    <td>@(atleta.DataTesseramento?.ToShortDateString())</td>
-                    <td>@atleta.Iscrizione</td>
-                    <td>@atleta.Gennaio</td>
-                    <td>@atleta.Febbraio</td>
-                    <td>@atleta.Marzo</td>
-                    <td>@atleta.Aprile</td>
-                    <td>@atleta.Maggio</td>
-                    <td>@atleta.Giugno</td>
-                    <td>@atleta.Luglio</td>
-                    <td>@atleta.Agosto</td>
-                    <td>@atleta.Settembre</td>
-                    <td>@atleta.Ottobre</td>
-                    <td>@atleta.Novembre</td>
-                    <td>@atleta.Dicembre</td>
-                    <td>
-                        <form method="post" asp-page-handler="Delete" style="display:inline;">
-                            <input type="hidden" name="id" value="@atleta.Id" />
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Sicuro di voler eliminare questo atleta?');">Elimina</button>
-                        </form>
-                        <form method="get" style="display:inline;">
-                            <input type="hidden" name="FiltroStagione" value="@Model.FiltroStagione" />
-                            <input type="hidden" name="AtletaEditId" value="@atleta.Id" />
-                            <button type="submit" class="btn btn-primary btn-sm">Modifica</button>
-                        </form>
-                    </td>
-                </tr>
+                <div class="alert alert-warning mt-3">
+                    <b>Pagamenti non associati:</b>
+                    <ul>
+                        @foreach (var log in pagamentiNonAssociati)
+                        {
+                            <li>@log</li>
+                        }
+                    </ul>
+                </div>
             }
-        }
-    </tbody>
-</table>
+            @if (pagamentiAmbigui.Any())
+            {
+                <div class="alert alert-danger mt-3">
+                    <b>Pagamenti ambigui:</b>
+                    <ul>
+                        @foreach (var log in pagamentiAmbigui)
+                        {
+                            <li>@log</li>
+                        }
+                    </ul>
+                </div>
+            }
+            @if (!pagamentiNonAssociati.Any() && !pagamentiAmbigui.Any())
+            {
+                <div class="alert alert-success mt-3">
+                    Nessuna segnalazione da mostrare per l'import corrente.
+                </div>
+            }
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             $('#atletiTable').DataTable({
-                "pageLength": 25,
-                "language": {
-                    "search": "Cerca:",
-                    "lengthMenu": "Mostra _MENU_ righe",
-                    "info": "Pagina _PAGE_ di _PAGES_",
-                    "paginate": {
-                        "first": "Prima",
-                        "last": "Ultima",
-                        "next": "Successiva",
-                        "previous": "Precedente"
+                paging: true,
+                pageLength: 25,
+                searching: true,
+                ordering: true,
+                order: [],
+                columnDefs: [
+                    { orderable: false, targets: [18] }
+                ],
+                language: {
+                    search: "Cerca:",
+                    lengthMenu: "Mostra _MENU_ elementi",
+                    info: "Visualizzati da _START_ a _END_ di _TOTAL_ elementi",
+                    infoEmpty: "Nessun elemento da visualizzare",
+                    paginate: {
+                        first: "Prima",
+                        last: "Ultima",
+                        next: "Successiva",
+                        previous: "Precedente"
                     },
-                    "zeroRecords": "Nessun record trovato",
-                    "infoEmpty": "Nessun dato disponibile",
-                    "infoFiltered": "(filtrato da _MAX_ righe totali)"
+                    zeroRecords: "Nessun record trovato"
                 }
             });
+
+            // Gestione tab via anchor
+            var hash = window.location.hash;
+            if (hash && $(hash).length) {
+                $('.nav-tabs button[data-bs-target="' + hash + '"]').tab('show');
+            }
         });
     </script>
 }

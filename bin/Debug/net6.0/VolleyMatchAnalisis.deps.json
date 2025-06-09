@@ -8,13 +8,27 @@
     ".NETCoreApp,Version=v6.0": {
       "VolleyMatchAnalisis/1.0.0": {
         "dependencies": {
+          "CsvHelper": "33.1.0",
           "EPPlus": "7.0.0",
           "Microsoft.EntityFrameworkCore.Design": "6.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.5",
-          "Pomelo.EntityFrameworkCore.MySql": "6.0.2"
+          "Pomelo.EntityFrameworkCore.MySql": "6.0.2",
+          "bootstrap": "5.3.6"
         },
         "runtime": {
           "VolleyMatchAnalisis.dll": {}
+        }
+      },
+      "bootstrap/5.3.6": {},
+      "CsvHelper/33.1.0": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.1/CsvHelper.dll": {
+            "assemblyVersion": "33.0.0.0",
+            "fileVersion": "33.1.0.26"
+          }
         }
       },
       "EPPlus/7.0.0": {
@@ -62,6 +76,7 @@
           }
         }
       },
+      "Microsoft.CSharp/4.7.0": {},
       "Microsoft.EntityFrameworkCore/6.0.7": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "6.0.7",
@@ -329,6 +344,20 @@
       "serviceable": false,
       "sha512": ""
     },
+    "bootstrap/5.3.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EIn/yfZDXTX8TFJSG6fkFQw7cXpXv2kFDrIBiKWR9Xi2NOCXNs3f7XcNd52X68ylFKI0TyEHjxBjdMz4x9GT4Q==",
+      "path": "bootstrap/5.3.6",
+      "hashPath": "bootstrap.5.3.6.nupkg.sha512"
+    },
+    "CsvHelper/33.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-kqfTOZGrn7NarNeXgjh86JcpTHUoeQDMB8t9NVa/ZtlSYiV1rxfRnQ49WaJsob4AiGrbK0XDzpyKkBwai4F8eg==",
+      "path": "csvhelper/33.1.0",
+      "hashPath": "csvhelper.33.1.0.nupkg.sha512"
+    },
     "EPPlus/7.0.0": {
       "type": "package",
       "serviceable": true,
@@ -356,6 +385,13 @@
       "sha512": "sha512-OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
       "path": "humanizer.core/2.8.26",
       "hashPath": "humanizer.core.2.8.26.nupkg.sha512"
+    },
+    "Microsoft.CSharp/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "path": "microsoft.csharp/4.7.0",
+      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore/6.0.7": {
       "type": "package",

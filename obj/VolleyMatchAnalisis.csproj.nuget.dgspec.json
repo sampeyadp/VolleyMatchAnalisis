@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\VolleyMatchAnalisis2.0\\VolleyMatchAnalisis.csproj": {}
+    "D:\\VolleyMatchAnalisis\\VolleyMatchAnalisis.csproj": {}
   },
   "projects": {
-    "D:\\VolleyMatchAnalisis2.0\\VolleyMatchAnalisis.csproj": {
+    "D:\\VolleyMatchAnalisis\\VolleyMatchAnalisis.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VolleyMatchAnalisis2.0\\VolleyMatchAnalisis.csproj",
+        "projectUniqueName": "D:\\VolleyMatchAnalisis\\VolleyMatchAnalisis.csproj",
         "projectName": "VolleyMatchAnalisis",
-        "projectPath": "D:\\VolleyMatchAnalisis2.0\\VolleyMatchAnalisis.csproj",
+        "projectPath": "D:\\VolleyMatchAnalisis\\VolleyMatchAnalisis.csproj",
         "packagesPath": "C:\\Users\\adelp\\.nuget\\packages\\",
-        "outputPath": "D:\\VolleyMatchAnalisis2.0\\obj\\",
+        "outputPath": "D:\\VolleyMatchAnalisis\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,6 +50,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.1.0, )"
+            },
             "EPPlus": {
               "target": "Package",
               "version": "[7.0.0, )"
@@ -67,6 +71,10 @@
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
               "version": "[6.0.2, )"
+            },
+            "bootstrap": {
+              "target": "Package",
+              "version": "[5.3.6, )"
             }
           },
           "imports": [

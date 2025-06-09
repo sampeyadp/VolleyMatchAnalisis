@@ -2,7 +2,6 @@
 @model VolleyMatchAnalisis.Pages.AnalizzaDati.IndexModel
 @{
     Layout = "_Layout";
-
     int puntiTotali = 0;
     int puntiCasa = 0;
     int puntiFuori = 0;
@@ -17,7 +16,6 @@
             bool squadraGiocaInCasa = Model.FiltroSquadra == gara.SquadraA;
             bool squadraGiocaFuori = Model.FiltroSquadra == gara.SquadraB;
 
-            // Calcolo punti classifica
             if (squadraGiocaInCasa)
             {
                 if (ris == "3-0" || ris == "3-1")
@@ -56,13 +54,11 @@
                     sommaFuori += valueFuori;
                 }
             }
-            // Punti realizzati e subiti nelle gare in casa
             if (squadraGiocaInCasa)
             {
                 puntiCasa += sommaCasa;
                 puntiCasaSubiti += sommaFuori;
             }
-            // Punti realizzati e subiti nelle gare fuori casa
             else if (squadraGiocaFuori)
             {
                 puntiFuori += sommaFuori;
@@ -74,120 +70,120 @@
 
 <h2>Analizza Dati</h2>
 
-<form method="get" style="margin-bottom:20px;">
-    <label>Codice Campionato:</label>
-    <select name="FiltroCodice">
-        <option value="">-- Tutti --</option>
-        @foreach (var cod in Model.CodiciCampionato)
-        {
-            <option value="@cod" @(cod == Model.FiltroCodice ? "selected" : "")>@cod</option>
-        }
-    </select>
-
-    <label>Squadra:</label>
-    <select name="FiltroSquadra">
-        <option value="">-- Tutte --</option>
-        @foreach (var sq in Model.Squadre)
-        {
-            <option value="@sq" @(sq == Model.FiltroSquadra ? "selected" : "")>@sq</option>
-        }
-    </select>
-
-    <button type="submit">Esegui</button>
+<form method="get" class="row g-3 align-items-end mb-4">
+    <div class="col-md-4">
+        <label for="FiltroCodice" class="form-label">Codice Campionato</label>
+        <select name="FiltroCodice" id="FiltroCodice" class="form-select">
+            <option value="">-- Tutti --</option>
+            @foreach (var cod in Model.CodiciCampionato)
+            {
+                <option value="@cod" @(cod == Model.FiltroCodice ? "selected" : "")>@cod</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label for="FiltroSquadra" class="form-label">Squadra</label>
+        <select name="FiltroSquadra" id="FiltroSquadra" class="form-select">
+            <option value="">-- Tutte --</option>
+            @foreach (var sq in Model.Squadre)
+            {
+                <option value="@sq" @(sq == Model.FiltroSquadra ? "selected" : "")>@sq</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary mt-4">Esegui</button>
+    </div>
 </form>
-
-<!-- Spaziatura aggiuntiva tra tabella totali e elenco gare -->
-<div style="height: 36px;"></div>
-<!-- oppure <br /><br /> per riga vuota semplice -->
 
 @if (Model.Analisi != null)
 {
     var dati = Model.Analisi.Value;
-    <table id="analisiTable" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Gare Totali</th>
-                <th>Vinte</th>
-                <th>Perse</th>
-                <th>Punti</th>
-                <th>Punti Fatti Casa</th>
-                <th>Punti Subiti Casa</th>
-                <th>Punti Fatti Fuori</th>
-                <th>Punti Subiti Fuori</th>
-                <th>Vinte in Casa</th>
-                <th>Vinte Fuori</th>
-                <th>Set Vinti Scarto > 5</th>
-                <th>Set Persi Scarto > 5</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>@dati.tot</td>
-                <td class="vittoria">@dati.vinte</td>
-                <td class="sconfitta">@dati.perse</td>
-                <td>@puntiTotali</td>
-                <td>@puntiCasa</td>
-                <td>@puntiCasaSubiti</td>
-                <td>@puntiFuori</td>
-                <td>@puntiFuoriSubiti</td>
-                <td>@dati.vinteCasa</td>
-                <td>@dati.vinteFuori</td>
-                <td class="vittoria">@dati.vinteScarto</td>
-                <td class="sconfitta">@dati.perseScarto</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <!-- Spaziatura aggiuntiva tra tabella totali e elenco gare -->
-    <div style="height: 36px;"></div>
-    <!-- oppure <br /><br /> per riga vuota semplice -->
+    <div class="table-responsive mb-4">
+        <table id="analisiTable" class="display table table-bordered table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Gare Totali</th>
+                    <th>Vinte</th>
+                    <th>Perse</th>
+                    <th>Punti</th>
+                    <th>Punti Fatti Casa</th>
+                    <th>Punti Subiti Casa</th>
+                    <th>Punti Fatti Fuori</th>
+                    <th>Punti Subiti Fuori</th>
+                    <th>Vinte in Casa</th>
+                    <th>Vinte Fuori</th>
+                    <th>Set Vinti Scarto &gt; 5</th>
+                    <th>Set Persi Scarto &gt; 5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@dati.tot</td>
+                    <td class="table-success">@dati.vinte</td>
+                    <td class="table-danger">@dati.perse</td>
+                    <td>@puntiTotali</td>
+                    <td>@puntiCasa</td>
+                    <td>@puntiCasaSubiti</td>
+                    <td>@puntiFuori</td>
+                    <td>@puntiFuoriSubiti</td>
+                    <td>@dati.vinteCasa</td>
+                    <td>@dati.vinteFuori</td>
+                    <td class="table-success">@dati.vinteScarto</td>
+                    <td class="table-danger">@dati.perseScarto</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     @if (Model.GareFiltrate != null && Model.GareFiltrate.Any())
     {
         <h3>Elenco gare della squadra selezionata</h3>
-        <table id="gareTable" class="display" style="margin-top:20px; width:100%;">
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Squadra A</th>
-                    <th>Squadra B</th>
-                    <th>Risultato</th>
-                    <th>Parziali</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var gara in Model.GareFiltrate)
-                {
-                    var ris = gara.Ris?.Replace(" ", "").Trim();
-                    bool squadraAWin = ris == "3-0" || ris == "3-1" || ris == "3-2";
-                    bool squadraBWin = ris == "0-3" || ris == "1-3" || ris == "2-3";
-
-                    bool squadraSelezionataHaVinto =
-                    (!string.IsNullOrEmpty(Model.FiltroSquadra) && (
-                    (Model.FiltroSquadra == gara.SquadraA && squadraAWin) ||
-                    (Model.FiltroSquadra == gara.SquadraB && squadraBWin)
-                    ));
-
-                    bool squadraSelezionataHaPerso =
-                    (!string.IsNullOrEmpty(Model.FiltroSquadra) && (
-                    (Model.FiltroSquadra == gara.SquadraA && squadraBWin) ||
-                    (Model.FiltroSquadra == gara.SquadraB && squadraAWin)
-                    ));
-
-                    string classeRis = squadraSelezionataHaVinto ? "vittoria"
-                    : squadraSelezionataHaPerso ? "sconfitta"
-                    : "";
-
+        <div class="table-responsive">
+            <table id="gareTable" class="display table table-bordered table-striped align-middle">
+                <thead>
                     <tr>
-                        <td>@gara.Data.ToShortDateString()</td>
-                        <td>@gara.SquadraA</td>
-                        <td>@gara.SquadraB</td>
-                        <td class="@classeRis">@gara.Ris</td>
-                        <td>@gara.Parziali</td>
+                        <th>Data</th>
+                        <th>Squadra A</th>
+                        <th>Squadra B</th>
+                        <th>Risultato</th>
+                        <th>Parziali</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var gara in Model.GareFiltrate)
+                    {
+                        var ris = gara.Ris?.Replace(" ", "").Trim();
+                        bool squadraAWin = ris == "3-0" || ris == "3-1" || ris == "3-2";
+                        bool squadraBWin = ris == "0-3" || ris == "1-3" || ris == "2-3";
+
+                        bool squadraSelezionataHaVinto =
+                        (!string.IsNullOrEmpty(Model.FiltroSquadra) && (
+                        (Model.FiltroSquadra == gara.SquadraA && squadraAWin) ||
+                        (Model.FiltroSquadra == gara.SquadraB && squadraBWin)
+                        ));
+
+                        bool squadraSelezionataHaPerso =
+                        (!string.IsNullOrEmpty(Model.FiltroSquadra) && (
+                        (Model.FiltroSquadra == gara.SquadraA && squadraBWin) ||
+                        (Model.FiltroSquadra == gara.SquadraB && squadraAWin)
+                        ));
+
+                        string classeRis = squadraSelezionataHaVinto ? "table-success"
+                        : squadraSelezionataHaPerso ? "table-danger"
+                        : "";
+
+                        <tr>
+                            <td>@gara.Data.ToShortDateString()</td>
+                            <td>@gara.SquadraA</td>
+                            <td>@gara.SquadraB</td>
+                            <td class="@classeRis">@gara.Ris</td>
+                            <td>@gara.Parziali</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
     else if (Model.GareFiltrate != null)
     {
@@ -201,7 +197,6 @@ else if (!string.IsNullOrEmpty(Model.FiltroCodice) && !string.IsNullOrEmpty(Mode
 
 @section Scripts {
     <script>
-        // Plugin per ordinamento date EU (gg/mm/yyyy)
         $.fn.dataTable.ext.type.order['date-eu-pre'] = function (date) {
             if (!date) return 0;
             var dateParts = date.split('/');

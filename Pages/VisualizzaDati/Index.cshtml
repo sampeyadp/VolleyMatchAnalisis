@@ -6,81 +6,87 @@
 
 <h2>Visualizza Dati</h2>
 
-<form method="get" style="margin-bottom:20px;">
-    <label>Codice Campionato:</label>
-    <select name="FiltroCodice">
-        <option value="">-- Tutti --</option>
-        @foreach (var cod in Model.CodiciCampionato)
-        {
-            <option value="@cod" @(cod == Model.FiltroCodice ? "selected" : "")>@cod</option>
-        }
-    </select>
-
-    <label>Squadra:</label>
-    <select name="FiltroSquadra">
-        <option value="">-- Tutte --</option>
-        @foreach (var sq in Model.Squadre.Where(sq => sq != null))
-        {
-            <option value="@sq" @(sq == Model.FiltroSquadra ? "selected" : "")>@sq</option>
-        }
-    </select>
-
-    <button type="submit">Esegui</button>
+<form method="get" class="row g-3 align-items-end mb-4">
+    <div class="col-md-4">
+        <label for="FiltroCodice" class="form-label">Codice Campionato</label>
+        <select name="FiltroCodice" id="FiltroCodice" class="form-select">
+            <option value="">-- Tutti --</option>
+            @foreach (var cod in Model.CodiciCampionato)
+            {
+                <option value="@cod" @(cod == Model.FiltroCodice ? "selected" : "")>@cod</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label for="FiltroSquadra" class="form-label">Squadra</label>
+        <select name="FiltroSquadra" id="FiltroSquadra" class="form-select">
+            <option value="">-- Tutte --</option>
+            @foreach (var sq in Model.Squadre.Where(sq => sq != null))
+            {
+                <option value="@sq" @(sq == Model.FiltroSquadra ? "selected" : "")>@sq</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary mt-4">Esegui</button>
+    </div>
 </form>
 
 <hr />
 
 @if (Model.GareFiltrate != null && Model.GareFiltrate.Any())
 {
-    <table id="gareTable" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Cod</th>
-                <th>Data</th>
-                <th>Ora</th>
-                <th>Località</th>
-                <th>SquadraA</th>
-                <th>SquadraB</th>
-                <th>Ris</th>
-                <th>Parziali</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var gara in Model.GareFiltrate)
-            {
-                var ris = gara.Ris?.Replace(" ", "").Trim();
-                bool squadraAWin = ris == "3-0" || ris == "3-1" || ris == "3-2";
-                bool squadraBWin = ris == "0-3" || ris == "1-3" || ris == "2-3";
-
-                bool squadraSelezionataHaVinto =
-                (!string.IsNullOrEmpty(Model.FiltroSquadra) && (
-                (Model.FiltroSquadra == gara.SquadraA && squadraAWin) ||
-                (Model.FiltroSquadra == gara.SquadraB && squadraBWin)
-                ));
-
-                bool squadraSelezionataHaPerso =
-                (!string.IsNullOrEmpty(Model.FiltroSquadra) && (
-                (Model.FiltroSquadra == gara.SquadraA && squadraBWin) ||
-                (Model.FiltroSquadra == gara.SquadraB && squadraAWin)
-                ));
-
-                string classeRis = squadraSelezionataHaVinto ? "vittoria"
-                : squadraSelezionataHaPerso ? "sconfitta"
-                : "";
-
+    <div class="table-responsive">
+        <table id="gareTable" class="display table table-bordered table-striped" style="width:100%">
+            <thead>
                 <tr>
-                    <td>@gara.Cod</td>
-                    <td>@gara.Data.ToShortDateString()</td>
-                    <td>@gara.Ora</td>
-                    <td>@gara.Localita</td>
-                    <td>@gara.SquadraA</td>
-                    <td>@gara.SquadraB</td>
-                    <td class="@classeRis">@gara.Ris</td>
-                    <td>@gara.Parziali</td>
+                    <th>Cod</th>
+                    <th>Data</th>
+                    <th>Ora</th>
+                    <th>Località</th>
+                    <th>SquadraA</th>
+                    <th>SquadraB</th>
+                    <th>Ris</th>
+                    <th>Parziali</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var gara in Model.GareFiltrate)
+                {
+                    var ris = gara.Ris?.Replace(" ", "").Trim();
+                    bool squadraAWin = ris == "3-0" || ris == "3-1" || ris == "3-2";
+                    bool squadraBWin = ris == "0-3" || ris == "1-3" || ris == "2-3";
+
+                    bool squadraSelezionataHaVinto =
+                    (!string.IsNullOrEmpty(Model.FiltroSquadra) && (
+                    (Model.FiltroSquadra == gara.SquadraA && squadraAWin) ||
+                    (Model.FiltroSquadra == gara.SquadraB && squadraBWin)
+                    ));
+
+                    bool squadraSelezionataHaPerso =
+                    (!string.IsNullOrEmpty(Model.FiltroSquadra) && (
+                    (Model.FiltroSquadra == gara.SquadraA && squadraBWin) ||
+                    (Model.FiltroSquadra == gara.SquadraB && squadraAWin)
+                    ));
+
+                    string classeRis = squadraSelezionataHaVinto ? "table-success"
+                    : squadraSelezionataHaPerso ? "table-danger"
+                    : "";
+
+                    <tr>
+                        <td>@gara.Cod</td>
+                        <td>@gara.Data.ToShortDateString()</td>
+                        <td>@gara.Ora</td>
+                        <td>@gara.Localita</td>
+                        <td>@gara.SquadraA</td>
+                        <td>@gara.SquadraB</td>
+                        <td class="@classeRis">@gara.Ris</td>
+                        <td>@gara.Parziali</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
 else
 {
@@ -95,9 +101,9 @@ else
                 pageLength: 25,
                 searching: true,
                 ordering: true,
-                order: [],  // Nessun ordinamento iniziale
+                order: [],
                 columnDefs: [
-                    { orderable: false, targets: [6, 7] }  // Disabilita ordinamento su Ris e Parziali (se vuoi)
+                    { orderable: false, targets: [6, 7] }
                 ],
                 language: {
                     search: "Cerca:",

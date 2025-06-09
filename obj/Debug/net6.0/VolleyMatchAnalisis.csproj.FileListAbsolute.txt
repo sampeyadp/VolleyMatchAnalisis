@@ -102,3 +102,4 @@ D:\VolleyMatchAnalisis2.0\obj\Debug\net6.0\refint\VolleyMatchAnalisis.dll
 D:\VolleyMatchAnalisis2.0\obj\Debug\net6.0\VolleyMatchAnalisis.pdb
 D:\VolleyMatchAnalisis2.0\obj\Debug\net6.0\VolleyMatchAnalisis.genruntimeconfig.cache
 D:\VolleyMatchAnalisis2.0\obj\Debug\net6.0\ref\VolleyMatchAnalisis.dll
+D:\VolleyMatchAnalisis\bin\Debug\net6.0\CsvHelper.dll

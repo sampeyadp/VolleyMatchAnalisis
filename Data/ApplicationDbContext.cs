@@ -11,7 +11,8 @@ namespace VolleyMatchAnalisis.Data
 
         public DbSet<Gara> Gare { get; set; } = null!;
         public DbSet<Squadra> Squadre { get; set; } = null!;
-        public DbSet<Atleta> Atleti { get; set; } = null!; 
+        public DbSet<Atleta> Atleti { get; set; } = null!;
+        public DbSet<Pagamento> Pagamenti { get; set; } = null!;
 
     }
 }

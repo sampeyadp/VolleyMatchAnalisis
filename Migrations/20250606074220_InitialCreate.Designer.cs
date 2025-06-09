@@ -11,8 +11,8 @@ using VolleyMatchAnalisis.Data;
 namespace VolleyMatchAnalisis.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250529150507_AddAtletiTable")]
-    partial class AddAtletiTable
+    [Migration("20250606074220_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,26 +27,22 @@ namespace VolleyMatchAnalisis.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<double>("Agosto")
+                    b.Property<double?>("Agosto")
                         .HasColumnType("double");
 
-                    b.Property<double>("Aprile")
+                    b.Property<double?>("Aprile")
                         .HasColumnType("double");
 
                     b.Property<string>("CAF")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Categoria")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("CodiceFiscale")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("CognomeNome")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime?>("DataFineValidita")
@@ -68,111 +64,93 @@ namespace VolleyMatchAnalisis.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Denominazione")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("DenominazioneProvenienza")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("DenominazioneSocietaPrestito")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double>("Dicembre")
+                    b.Property<double?>("Dicembre")
                         .HasColumnType("double");
 
-                    b.Property<double>("Febbraio")
+                    b.Property<double?>("Febbraio")
                         .HasColumnType("double");
 
-                    b.Property<double>("Gennaio")
+                    b.Property<double?>("Gennaio")
                         .HasColumnType("double");
 
-                    b.Property<double>("Giugno")
+                    b.Property<double?>("Giugno")
                         .HasColumnType("double");
 
                     b.Property<string>("Indirizzo")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double>("Iscrizione")
+                    b.Property<double?>("Iscrizione")
                         .HasColumnType("double");
 
                     b.Property<string>("LocalitaNascita")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("LocalitaResidenza")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double>("Luglio")
+                    b.Property<double?>("Luglio")
                         .HasColumnType("double");
 
-                    b.Property<double>("Maggio")
+                    b.Property<double?>("Maggio")
                         .HasColumnType("double");
 
-                    b.Property<double>("Marzo")
+                    b.Property<double?>("Marzo")
                         .HasColumnType("double");
 
                     b.Property<string>("Matricola")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int?>("MesiValidita")
                         .HasColumnType("int");
 
                     b.Property<string>("ModTipoAttivita")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double>("Novembre")
+                    b.Property<double?>("Novembre")
                         .HasColumnType("double");
 
-                    b.Property<double>("Ottobre")
+                    b.Property<double?>("Ottobre")
                         .HasColumnType("double");
 
                     b.Property<string>("ProvinciaNascita")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ProvinciaResidenza")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Sesso")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<double>("Settembre")
+                    b.Property<double?>("Settembre")
                         .HasColumnType("double");
 
                     b.Property<string>("SocietaAppartenenza")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("SocietaPrestito")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("SocietaProvenienza")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("SocietaTesserata")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Stagione")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Tessera")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("TesseraSV")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -261,6 +239,36 @@ namespace VolleyMatchAnalisis.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Gare");
+                });
+
+            modelBuilder.Entity("VolleyMatchAnalisis.Models.Pagamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Beneficiario")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Causale")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("DataBonifico")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("Elaborato")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("IBAN")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal?>("Importo")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pagamenti");
                 });
 
             modelBuilder.Entity("VolleyMatchAnalisis.Models.Squadra", b =>
