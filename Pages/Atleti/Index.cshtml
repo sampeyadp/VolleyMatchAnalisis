@@ -87,7 +87,7 @@
 
         <div class="table-responsive">
             <table id="atletiTable" class="table table-bordered table-striped align-middle w-100">
-                <thead>
+                <thead class="table-primary">
                     <tr>
                         <th>Anno</th>
                         <th>Cognome Nome</th>
@@ -219,6 +219,7 @@
                                 <td class="@(atleta.Luglio > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Luglio:0.00}")</td>
                                 <td class="@(atleta.Agosto > 0 ? "table-success" : "table-danger") text-center">@($"{atleta.Agosto:0.00}")</td>
                                 <td>
+                                    <div class="d-flex align-items-center gap-1">
                                     <form method="post" asp-page-handler="Delete" class="d-inline">
                                         <input type="hidden" name="id" value="@atleta.Id" />
                                         <button type="submit" class="btn btn-danger btn-sm" title="Elimina" onclick="return confirm('Sicuro di voler eliminare questo atleta?');">
@@ -232,6 +233,7 @@
                                             <i class="bi bi-pencil-square"></i>
                                         </button>
                                     </form>
+                                    </div>
                                 </td>
                             </tr>
                         }

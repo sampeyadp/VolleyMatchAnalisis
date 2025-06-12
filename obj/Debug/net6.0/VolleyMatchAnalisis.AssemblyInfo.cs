@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VolleyMatchAnalisis")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+af37e1c4dea84d92773e4495a8a67501415db97d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e6531814ca8111988737474508d7de16553e4ecb")]
 [assembly: System.Reflection.AssemblyProductAttribute("VolleyMatchAnalisis")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VolleyMatchAnalisis")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

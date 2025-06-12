@@ -6,9 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<ExcelImportService>();
 builder.Services.AddScoped<GaraAnalysisService>();
 builder.Services.AddScoped<ExcelImportAtletiService>();

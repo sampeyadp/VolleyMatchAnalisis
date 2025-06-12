@@ -50,7 +50,7 @@
                 @foreach (var p in Model.ImportResult)
                 {
                     <tr>
-                        <td>@(p.DataBonifico != null ? p.DataBonifico.ToString("dd/MM/yyyy") : "")</td>
+                        <td>@p.DataBonifico.ToString("dd/MM/yyyy")</td>
                         <td>@p.IBAN</td>
                         <td>@p.Beneficiario</td>
                         <td>@(p.Importo?.ToString("N2") ?? "")</td>

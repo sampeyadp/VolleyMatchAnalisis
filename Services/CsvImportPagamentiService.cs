@@ -26,8 +26,6 @@ namespace VolleyMatchAnalisis.Services
 
             while (csv.Read())
             {
-                try
-                {
                     // La colonna più alta richiesta è la 20 (indice 20 = 21a colonna)
                     if (csv.Parser.Count < 21)
                         continue; // Salta righe troppo corte
@@ -64,15 +62,11 @@ namespace VolleyMatchAnalisis.Services
 
                     if (!_context.Pagamenti.Any(p => p.IBAN == pagamento.IBAN && p.DataBonifico == pagamento.DataBonifico))
                         pagamenti.Add(pagamento);
-                }
-                catch (Exception ex)
-                {
-                    // Log errore se serve, es: Console.WriteLine(ex.Message);
-                }
             }
 
             _context.Pagamenti.AddRange(pagamenti);
-            await _context.SaveChangesAsync();
+            var inserted = await _context.SaveChangesAsync();
+            Console.WriteLine($"Salvati {inserted} pagamenti");
             return pagamenti;
         }
 

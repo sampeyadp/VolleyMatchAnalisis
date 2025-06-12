@@ -32,9 +32,9 @@ namespace VolleyMatchAnalisis.Pages.Atleti
         public List<Atleta> Atleti { get; set; } = new();
 
         [TempData]
-        public string SuccessMessage { get; set; }
+        public string SuccessMessage { get; set; } = string.Empty;
         [TempData]
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; } = string.Empty;
 
         public async Task OnGetAsync()
         {

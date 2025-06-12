@@ -11,7 +11,7 @@ using VolleyMatchAnalisis.Data;
 namespace VolleyMatchAnalisis.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250606074220_InitialCreate")]
+    [Migration("20250609082525_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

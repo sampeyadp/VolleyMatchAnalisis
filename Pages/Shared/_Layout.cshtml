@@ -30,9 +30,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/AnalizzaDati/Index">Analizza Gare</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Atleti/Index">Atleti</a>
+                    <!-- INIZIO MODIFICA MENU ATLETI -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="atletiDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Atleti
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="atletiDropdown">
+                            <li>
+                                <a class="dropdown-item" href="/Atleti/Index">Atleti</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/Stampe/Index">Stampa Ricevuta</a>
+                            </li>
+                        </ul>
                     </li>
+                    <!-- FINE MODIFICA MENU ATLETI -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="importDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Import Dati
@@ -59,3 +71,4 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 </body>
+</html>

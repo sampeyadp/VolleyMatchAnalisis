@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using VolleyMatchAnalisis.Services;
 using VolleyMatchAnalisis.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace VolleyMatchAnalisis.Pages.ImportPagamenti
 {
@@ -23,7 +21,7 @@ namespace VolleyMatchAnalisis.Pages.ImportPagamenti
         public string? ErrorMessage { get; set; }
 
         [BindProperty]
-        public string SuccessMessage { get; set; }
+        public string SuccessMessage { get; set; } = string.Empty;
 
         public void OnGet() { }
 
